@@ -49,5 +49,7 @@ if [ "$delvol" == "y" ]; then
   sudo docker volume rm $(docker volume ls -q --filter name=influxdb)
   sudo docker volume rm $(docker volume ls -q --filter name=grafana)
 fi
+sudo snap stop mosquitto
+sudo snap disable mosquitto
 
 echo "✅ Cleanup complete. Your system is restored."

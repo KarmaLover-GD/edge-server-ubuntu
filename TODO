@@ -1,0 +1,21 @@
+0.214030,2,d7,2,8,00,00,00,00,00,00,00,df,12
+0.216040,2,101,2,8,88,00,00,1c,00,00,00,ae,15
+ 
+conversion
+ 
+0.214030,d7,00,00,00,00,00,00,00,df,12
+0.216040,101,88,00,00,1c,00,00,00,ae,15
+ 
+0.214030,d7,00000000000000df12
+0.216040,101,8800001c000000ae15
+ 
+ 
+NODE RED
+ 
+CANID : 101
+DATA Label : Cylinder Pressure
+DATA Position : 4.0
+DATA Length : 10
+DATA Unit: Mpa
+DATA Resolution : 0.02
+Data Offset : 0

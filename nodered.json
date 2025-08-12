@@ -1,0 +1,62 @@
+[
+    {
+        "id": "d5d7f1b0f5f9a3a1",
+        "type": "inject",
+        "z": "c1f4eaa4b1b8e2b0",
+        "name": "Simulate CAN message (101)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"timestamp\":\"0.216040\",\"id\":\"101\",\"data\":\"8800001c000000ae15\"}",
+        "payloadType": "json",
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "d86331a0c8f892df"
+            ]
+        ]
+    },
+    {
+        "id": "d86331a0c8f892df",
+        "type": "function",
+        "z": "c1f4eaa4b1b8e2b0",
+        "name": "Extract Cylinder Pressure",
+        "func": "// Only process if CAN ID matches\nif (msg.payload.id !== \"101\") {\n    return null;\n}\n\n// Parameters\nconst position = 4; // byte index (0-based)\nconst length = 10; // bits length\nconst resolution = 0.02; // scaling factor\nconst offset = 0; // offset value\n\n// Convert hex string to byte array\nlet bytes = [];\nfor (let i = 0; i < msg.payload.data.length; i += 2) {\n    bytes.push(parseInt(msg.payload.data.substr(i, 2), 16));\n}\n\n// Extract two bytes starting from 'position'\nlet rawValue = (bytes[position] << 8) | bytes[position + 1];\n\n// If length < 16, mask the unused bits\nif (length < 16) {\n    const mask = (1 << length) - 1;\n    rawValue = rawValue & mask;\n}\n\n// Apply resolution and offset\nconst value = rawValue * resolution + offset;\n\nmsg.payload = {\n    label: \"Cylinder Pressure\",\n    value: value,\n    unit: \"MPa\"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 160,
+        "wires": [
+            [
+                "872b674b79df764b"
+            ]
+        ]
+    },
+    {
+        "id": "872b674b79df764b",
+        "type": "debug",
+        "z": "c1f4eaa4b1b8e2b0",
+        "name": "Debug Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 160,
+        "wires": []
+    }
+]
