@@ -1,0 +1,37 @@
+2. Use Node-RED to Subscribe and Publish MQTT Messages
+
+Since Node-RED is running on http://192.168.12.1:1880 after your deploy script, do this:
+
+    Open Node-RED in your browser.
+
+    Add an MQTT input node:
+
+        Set the broker to mqtt://mosquitto:1883 or mqtt://192.168.12.1:1883.
+
+        Subscribe to a topic like test/topic.
+
+    Add a debug node connected to the MQTT input node — this will show messages received.
+
+    Deploy the flow.
+
+    Add an MQTT output node to publish a test message to the same topic (test/topic).
+
+    Trigger that node manually or using an inject node.
+
+If your debug panel shows the message you published, MQTT messaging works end-to-end.
+3. Sending MQTT Messages from Another Device Connected to Hotspot
+
+Since your hotspot uses subnet 192.168.12.x, any device connected to it should:
+
+    Use MQTT client (e.g., MQTT.fx, MQTT Explorer, or mosquitto_pub/mosquitto_sub tools).
+
+    Connect to MQTT broker at 192.168.12.1:1883.
+
+    Publish and subscribe to the topics you configured (test/topic or your own).
+
+This will verify the network and MQTT broker accept external clients.
+
+
+
+
+envoyer des données mqtt depuis un fichier - >>> compute avec nodered -> base de donnée ->  grafana 

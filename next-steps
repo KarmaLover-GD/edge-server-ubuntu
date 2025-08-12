@@ -1,0 +1,19 @@
+1. Add MQTT and InfluxDB nodes in Node-RED
+
+    Use mqtt in node to subscribe to topics like sensor/temperature
+
+    Use influxdb out node to write to edge_data database
+
+2. In Grafana
+
+    Add InfluxDB as a data source:
+
+        URL: http://influxdb:8086
+
+        DB: edge_data
+
+        User: edgeuser / edgepass
+
+    Create dashboards with queries like:
+    
+    SELECT value FROM temperature WHERE topic = 'sensor/temperature'
