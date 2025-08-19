@@ -1,0 +1,154 @@
+[
+    {
+        "id": "23d96169be429688",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "93bf057bd9bb516a",
+        "type": "mqtt in",
+        "z": "23d96169be429688",
+        "name": "Receive CSV via MQTT",
+        "topic": "csv/file",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": false,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "476d9c4bb282ec73"
+            ]
+        ]
+    },
+    {
+        "id": "476d9c4bb282ec73",
+        "type": "csv",
+        "z": "23d96169be429688",
+        "name": "Parse CSV",
+        "sep": ",",
+        "hdrin": false,
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "timestamp,CANID,CANDATA",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 350,
+        "y": 420,
+        "wires": [
+            [
+                "e3eaf190b182e1ac"
+            ]
+        ]
+    },
+    {
+        "id": "e3eaf190b182e1ac",
+        "type": "function",
+        "z": "23d96169be429688",
+        "name": "Decode CAN Data",
+        "func": "let rows = msg.payload;\nlet decoded = [];\n\nrows.forEach(row => {\n    let ts = parseFloat(row.timestamp);\n    let id = String(row.CANID).toLowerCase();\n    let data = String(row.CANDATA);\n\n    let bytes = [];\n    for (let i = 0; i < data.length; i += 2) {\n        bytes.push(parseInt(data.substr(i, 2), 16));\n    }\n\n    if (id === \"101\") {\n        let raw = ((bytes[3] << 2) | (bytes[4] >> 6)) & 0x3FF;\n        let value = raw * 0.02;\n        decoded.push({Timestamp: ts, CANID: id, Label: \"CylinderPressure\", Value: value, Unit: \"Mpa\"});\n    }\n    else if (id === \"d7\") {\n        let raw = (bytes[2] << 8) | bytes[3];\n        let value = raw * 0.01;\n        decoded.push({Timestamp: ts, CANID: id, Label: \"VehicleSpeed\", Value: value, Unit: \"km/h\"});\n    }\n});\n\nmsg.payload = decoded;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 220,
+        "wires": [
+            [
+                "9a6e5c99c5bfcf40"
+            ]
+        ]
+    },
+    {
+        "id": "9a6e5c99c5bfcf40",
+        "type": "csv",
+        "z": "23d96169be429688",
+        "name": "Convert to CSV",
+        "sep": ",",
+        "hdrin": false,
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "Timestamp,CANID,Label,Value,Unit",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 720,
+        "y": 420,
+        "wires": [
+            [
+                "68719269fb4502c4"
+            ]
+        ]
+    },
+    {
+        "id": "68719269fb4502c4",
+        "type": "file",
+        "z": "23d96169be429688",
+        "name": "Write Decoded CSV",
+        "filename": "/tmp/decoded.csv\"",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 900,
+        "y": 220,
+        "wires": [
+            [
+                "3842cfdf2f832cb4"
+            ]
+        ]
+    },
+    {
+        "id": "3842cfdf2f832cb4",
+        "type": "debug",
+        "z": "23d96169be429688",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "Mosquitto",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {}
+    }
+]
