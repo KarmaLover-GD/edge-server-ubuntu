@@ -394,3 +394,168 @@
 1755591996: New connection from 172.18.0.1:52660 on port 1883.
 1755591996: New client connected from 172.18.0.1:52660 as auto-2901C98F-3536-03FB-567F-5553F189545F (p2, c1, k60).
 1755591996: Client auto-2901C98F-3536-03FB-567F-5553F189545F disconnected.
+1755592728: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755592728: Error saving in-memory database, unable to open /mosquitto/data//mosquitto.db.new for writing.
+1755592728: Error: Permission denied.
+1755594529: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755594529: Error saving in-memory database, unable to open /mosquitto/data//mosquitto.db.new for writing.
+1755594529: Error: Permission denied.
+1755596330: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755596330: Error saving in-memory database, unable to open /mosquitto/data//mosquitto.db.new for writing.
+1755596330: Error: Permission denied.
+1755597230: Client nodered40585f2ff0227a69 disconnected.
+1755597230: New connection from 172.18.0.6:58340 on port 1883.
+1755597230: New client connected from 172.18.0.6:58340 as noderedc1325bf95ee52427 (p2, c1, k60).
+1755597244: New connection from 172.18.0.1:60198 on port 1883.
+1755597244: New client connected from 172.18.0.1:60198 as auto-202FCB95-191A-4FA8-DA58-3C3C70F30412 (p2, c1, k60).
+1755597244: Client auto-202FCB95-191A-4FA8-DA58-3C3C70F30412 disconnected.
+1755597416: Client noderedc1325bf95ee52427 disconnected.
+1755597416: New connection from 172.18.0.6:41606 on port 1883.
+1755597416: New client connected from 172.18.0.6:41606 as noderedbccb8c36057f628f (p2, c1, k60).
+1755597419: New connection from 172.18.0.1:33178 on port 1883.
+1755597419: New client connected from 172.18.0.1:33178 as auto-3B88B081-9CE2-B194-2A18-392A27B38FE6 (p2, c1, k60).
+1755597419: Client auto-3B88B081-9CE2-B194-2A18-392A27B38FE6 disconnected.
+1755597630: Client noderedbccb8c36057f628f disconnected.
+1755597630: mosquitto version 2.0.22 terminating
+1755597630: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755597630: Error saving in-memory database, unable to open /mosquitto/data//mosquitto.db.new for writing.
+1755597630: Error: Permission denied.
+1755597648: mosquitto version 2.0.22 starting
+1755597648: Config loaded from /mosquitto/config/mosquitto.conf.
+1755597648: Opening ipv4 listen socket on port 1883.
+1755597648: Opening ipv6 listen socket on port 1883.
+1755597648: mosquitto version 2.0.22 running
+1755597649: New connection from 172.18.0.6:40128 on port 1883.
+1755597649: New client connected from 172.18.0.6:40128 as nodered730b30301d3cb8be (p2, c1, k60).
+1755597688: New connection from 172.18.0.1:47056 on port 1883.
+1755597688: New client connected from 172.18.0.1:47056 as auto-029E27B5-23D3-058B-C67A-078A5349E1F7 (p2, c1, k60).
+1755597688: Client auto-029E27B5-23D3-058B-C67A-078A5349E1F7 disconnected.
+1755597722: New connection from 172.18.0.1:48768 on port 1883.
+1755597722: New client connected from 172.18.0.1:48768 as auto-A444AF00-B6B5-B7B1-D444-95C95C42D812 (p2, c1, k60).
+1755597722: Client auto-A444AF00-B6B5-B7B1-D444-95C95C42D812 disconnected.
+1755597732: Client nodered730b30301d3cb8be disconnected.
+1755597732: New connection from 172.18.0.6:39198 on port 1883.
+1755597732: New client connected from 172.18.0.6:39198 as nodered298ae4dc0f08e9e7 (p2, c1, k60).
+1755597734: New connection from 172.18.0.1:57420 on port 1883.
+1755597734: New client connected from 172.18.0.1:57420 as auto-36DA713D-B7EE-6268-28BE-6597B3B96943 (p2, c1, k60).
+1755597734: Client auto-36DA713D-B7EE-6268-28BE-6597B3B96943 disconnected.
+1755597907: New connection from 172.18.0.1:38238 on port 1883.
+1755597907: New client connected from 172.18.0.1:38238 as auto-DDE99384-EC3C-94EE-44E0-1A3DB4C0DC92 (p2, c1, k60).
+1755597907: Client auto-DDE99384-EC3C-94EE-44E0-1A3DB4C0DC92 disconnected.
+1755597972: New connection from 172.18.0.1:60360 on port 1883.
+1755597972: New client connected from 172.18.0.1:60360 as auto-CE86C87B-4E82-2C38-AC62-36BF78C4847F (p2, c1, k60).
+1755597972: Client auto-CE86C87B-4E82-2C38-AC62-36BF78C4847F disconnected.
+1755598096: Client nodered298ae4dc0f08e9e7 disconnected.
+1755598096: mosquitto version 2.0.22 terminating
+1755598096: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755598119: mosquitto version 2.0.22 starting
+1755598119: Config loaded from /mosquitto/config/mosquitto.conf.
+1755598119: Opening ipv4 listen socket on port 1883.
+1755598119: Opening ipv6 listen socket on port 1883.
+1755598119: mosquitto version 2.0.22 running
+1755598120: New connection from 172.18.0.5:58372 on port 1883.
+1755598120: New client connected from 172.18.0.5:58372 as nodereda137107411ddba02 (p2, c1, k60).
+1755598139: Client nodereda137107411ddba02 disconnected.
+1755598140: mosquitto version 2.0.22 terminating
+1755598140: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755598157: mosquitto version 2.0.22 starting
+1755598157: Config loaded from /mosquitto/config/mosquitto.conf.
+1755598157: Opening ipv4 listen socket on port 1883.
+1755598157: Opening ipv6 listen socket on port 1883.
+1755598157: mosquitto version 2.0.22 running
+1755598158: New connection from 172.18.0.6:52844 on port 1883.
+1755598158: New client connected from 172.18.0.6:52844 as noderedaaad274e78654340 (p2, c1, k60).
+1755598194: New connection from 172.18.0.1:39266 on port 1883.
+1755598194: New client connected from 172.18.0.1:39266 as auto-E8F42D40-60BA-12EB-E1AF-F1AE4720C36F (p2, c1, k60).
+1755598194: Client auto-E8F42D40-60BA-12EB-E1AF-F1AE4720C36F disconnected.
+1755598686: Client noderedaaad274e78654340 disconnected.
+1755598686: New connection from 172.18.0.6:42290 on port 1883.
+1755598686: New client connected from 172.18.0.6:42290 as noderedbc756f73161f6c5e (p2, c1, k60).
+1755598932: Client noderedbc756f73161f6c5e disconnected.
+1755598932: New connection from 172.18.0.6:35058 on port 1883.
+1755598932: New client connected from 172.18.0.6:35058 as nodered1f1d1e6ec0bacbee (p2, c1, k60).
+1755598948: New connection from 172.18.0.1:47618 on port 1883.
+1755598948: New client connected from 172.18.0.1:47618 as auto-2130C4FD-8DDC-723F-E12F-5E301A079427 (p2, c1, k60).
+1755598948: Client auto-2130C4FD-8DDC-723F-E12F-5E301A079427 disconnected.
+1755598949: New connection from 172.18.0.1:47624 on port 1883.
+1755598949: New client connected from 172.18.0.1:47624 as auto-6C85EA4B-329A-2FDF-8D47-4D707EB06887 (p2, c1, k60).
+1755598949: Client auto-6C85EA4B-329A-2FDF-8D47-4D707EB06887 disconnected.
+1755598950: New connection from 172.18.0.1:47636 on port 1883.
+1755598950: New client connected from 172.18.0.1:47636 as auto-98D8284A-7149-E2F6-687E-46AFB9E04AED (p2, c1, k60).
+1755598950: Client auto-98D8284A-7149-E2F6-687E-46AFB9E04AED disconnected.
+1755599005: New connection from 172.18.0.1:37426 on port 1883.
+1755599005: New client connected from 172.18.0.1:37426 as auto-B2302B4A-2D43-7C49-0A97-D29AEA50DC60 (p2, c1, k60).
+1755599005: Client auto-B2302B4A-2D43-7C49-0A97-D29AEA50DC60 disconnected.
+1755599006: New connection from 172.18.0.1:39958 on port 1883.
+1755599006: New client connected from 172.18.0.1:39958 as auto-B3A51576-73DC-2974-A17A-3AC887AB61D5 (p2, c1, k60).
+1755599006: Client auto-B3A51576-73DC-2974-A17A-3AC887AB61D5 disconnected.
+1755599007: New connection from 172.18.0.1:39964 on port 1883.
+1755599007: New client connected from 172.18.0.1:39964 as auto-73B78AE7-BF69-4568-1887-89486A1B0782 (p2, c1, k60).
+1755599007: Client auto-73B78AE7-BF69-4568-1887-89486A1B0782 disconnected.
+1755599166: Client nodered1f1d1e6ec0bacbee disconnected.
+1755599166: New connection from 172.18.0.6:60726 on port 1883.
+1755599166: New client connected from 172.18.0.6:60726 as noderedd4c8da415b4718d6 (p2, c1, k60).
+1755599181: New connection from 172.18.0.1:44672 on port 1883.
+1755599181: New client connected from 172.18.0.1:44672 as auto-471973D6-10C5-509B-8D53-5547C70275E8 (p2, c1, k60).
+1755599181: Client auto-471973D6-10C5-509B-8D53-5547C70275E8 disconnected.
+1755599182: New connection from 172.18.0.1:44680 on port 1883.
+1755599182: New client connected from 172.18.0.1:44680 as auto-AEB23B3F-2E63-271D-4B2F-04A30EBD1641 (p2, c1, k60).
+1755599182: Client auto-AEB23B3F-2E63-271D-4B2F-04A30EBD1641 disconnected.
+1755599182: New connection from 172.18.0.1:44696 on port 1883.
+1755599182: New client connected from 172.18.0.1:44696 as auto-CA23007B-33B9-A5BF-8770-5755C0076FAD (p2, c1, k60).
+1755599182: Client auto-CA23007B-33B9-A5BF-8770-5755C0076FAD disconnected.
+1755599280: New connection from 172.18.0.1:53274 on port 1883.
+1755599280: New client connected from 172.18.0.1:53274 as auto-414A67F5-A6F0-0F52-D763-25F9A740F514 (p2, c1, k60).
+1755599280: Client auto-414A67F5-A6F0-0F52-D763-25F9A740F514 disconnected.
+1755599552: Client noderedd4c8da415b4718d6 disconnected.
+1755599552: New connection from 172.18.0.6:52408 on port 1883.
+1755599552: New client connected from 172.18.0.6:52408 as nodered7f83367aab86d421 (p2, c1, k60).
+1755599558: New connection from 172.18.0.1:49602 on port 1883.
+1755599558: New client connected from 172.18.0.1:49602 as auto-F817815F-8BD9-6F25-F63C-4588789DB570 (p2, c1, k60).
+1755599558: Client auto-F817815F-8BD9-6F25-F63C-4588789DB570 disconnected.
+1755599559: New connection from 172.18.0.1:49604 on port 1883.
+1755599559: New client connected from 172.18.0.1:49604 as auto-7670FD70-FE62-A133-525D-B0FBDD73EC84 (p2, c1, k60).
+1755599559: Client auto-7670FD70-FE62-A133-525D-B0FBDD73EC84 disconnected.
+1755599559: New connection from 172.18.0.1:49614 on port 1883.
+1755599559: New client connected from 172.18.0.1:49614 as auto-582F9D59-7AF9-F7CA-D41D-CDF21F002516 (p2, c1, k60).
+1755599559: Client auto-582F9D59-7AF9-F7CA-D41D-CDF21F002516 disconnected.
+1755599560: New connection from 172.18.0.1:49624 on port 1883.
+1755599560: New client connected from 172.18.0.1:49624 as auto-80B8FB17-FF0F-8279-3283-46A20E339966 (p2, c1, k60).
+1755599560: Client auto-80B8FB17-FF0F-8279-3283-46A20E339966 disconnected.
+1755599560: New connection from 172.18.0.1:49640 on port 1883.
+1755599560: New client connected from 172.18.0.1:49640 as auto-E1BFF81D-39A5-9753-1CE2-A2203B2B557A (p2, c1, k60).
+1755599560: Client auto-E1BFF81D-39A5-9753-1CE2-A2203B2B557A disconnected.
+1755599569: Client nodered7f83367aab86d421 disconnected.
+1755599569: New connection from 172.18.0.6:56596 on port 1883.
+1755599569: New client connected from 172.18.0.6:56596 as nodered9610a89f3a19d675 (p2, c1, k60).
+1755599577: New connection from 172.18.0.1:36670 on port 1883.
+1755599577: New client connected from 172.18.0.1:36670 as auto-3A2905F9-8558-E04E-A1B0-02C7A324D9EC (p2, c1, k60).
+1755599577: Client auto-3A2905F9-8558-E04E-A1B0-02C7A324D9EC disconnected.
+1755599598: Client nodered9610a89f3a19d675 disconnected.
+1755599598: New connection from 172.18.0.6:33070 on port 1883.
+1755599598: New client connected from 172.18.0.6:33070 as nodered643f031fd33bb995 (p2, c1, k60).
+1755599600: New connection from 172.18.0.1:46858 on port 1883.
+1755599600: New client connected from 172.18.0.1:46858 as auto-EDCA8AD1-D850-FE94-3B43-169F4AE98473 (p2, c1, k60).
+1755599600: Client auto-EDCA8AD1-D850-FE94-3B43-169F4AE98473 disconnected.
+1755599642: New connection from 172.18.0.1:37806 on port 1883.
+1755599642: New client connected from 172.18.0.1:37806 as auto-7ACFF9D8-F31C-BF53-D143-BAED8B9197A3 (p2, c1, k60).
+1755599642: Client auto-7ACFF9D8-F31C-BF53-D143-BAED8B9197A3 disconnected.
+1755599690: Client nodered643f031fd33bb995 disconnected.
+1755599690: mosquitto version 2.0.22 terminating
+1755599690: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1755599713: mosquitto version 2.0.22 starting
+1755599713: Config loaded from /mosquitto/config/mosquitto.conf.
+1755599713: Opening ipv4 listen socket on port 1883.
+1755599713: Opening ipv6 listen socket on port 1883.
+1755599713: mosquitto version 2.0.22 running
+1755599848: New connection from 172.18.0.6:34980 on port 1883.
+1755599848: New client connected from 172.18.0.6:34980 as noderedc20560cc4d79371b (p2, c1, k60).
+1755600608: New connection from 172.18.0.1:56626 on port 1883.
+1755600608: New client connected from 172.18.0.1:56626 as auto-957754D4-6418-FF02-0F90-472CE2A6B8A3 (p2, c1, k60).
+1755600608: Client auto-957754D4-6418-FF02-0F90-472CE2A6B8A3 disconnected.
+1755600655: Client noderedc20560cc4d79371b disconnected.
+1755600655: New connection from 172.18.0.6:50194 on port 1883.
+1755600655: New client connected from 172.18.0.6:50194 as nodered42d0da165195436d (p2, c1, k60).
+1755600657: New connection from 172.18.0.1:44348 on port 1883.
+1755600657: New client connected from 172.18.0.1:44348 as auto-338EBC63-0DEE-8047-A05F-6D2DD38C5B02 (p2, c1, k60).
+1755600657: Client auto-338EBC63-0DEE-8047-A05F-6D2DD38C5B02 disconnected.

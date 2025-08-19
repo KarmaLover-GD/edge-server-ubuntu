@@ -53,3 +53,13 @@ client :
 
 
 niveaus de QOS en MQTT 1 , 2 3  ?? 
+
+
+in case of  no authorization to write csv from nodered : 
+
+mkdir -p ./csv
+sudo chown -R 1000:1000 ./csv
+chmod -R 775 ./csv
+
+in case you cannot zip or save due to authorizations on mosquitto: 
+sudo chown -R $USER:$USER docker/mosquitto/data

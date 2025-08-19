@@ -1,0 +1,19 @@
+1️⃣ Prepare InfluxDB for Node-RED
+
+Make sure your InfluxDB service is running (you already have edge_data database and edgeuser credentials). We'll use the Node-RED InfluxDB node.
+
+In Node-RED, go to the Palette Manager → install node-red-contrib-influxdb.
+
+Add an InfluxDB out node to your flow.
+
+Configure it:
+
+Server: http://influxdb:8086
+
+Database: edge_data
+
+Username: edgeuser
+
+Password: edgepass
+
+Measurement: use the label field from your decoded data (msg.payload.Label), or a fixed name like vehicle_data.

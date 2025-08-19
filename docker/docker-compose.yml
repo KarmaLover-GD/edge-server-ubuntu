@@ -16,6 +16,7 @@ services:
       - "1880:1880"
     volumes:
       - nodered_data:/data
+      - csv_data:/csv
     depends_on:
       - mqtt
       - influxdb
@@ -48,19 +49,15 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin123
 
-  portainer:
-    image: portainer/portainer-ce
-    container_name: portainer
-    restart: always
-    ports:
-      - "9000:9000"
-      - "8000:8000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
 
 volumes:
   nodered_data:
   influxdb_data:
   grafana_data:
-  portainer_data:
+  csv_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./csv
+      o: bind
+  
