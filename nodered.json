@@ -1,52 +1,89 @@
 [
     {
-        "id": "d5d7f1b0f5f9a3a1",
-        "type": "inject",
-        "z": "c1f4eaa4b1b8e2b0",
-        "name": "Simulate CAN message (101)",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"timestamp\":\"0.216040\",\"id\":\"101\",\"data\":\"8800001c000000ae15\"}",
-        "payloadType": "json",
-        "x": 220,
-        "y": 160,
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "mqtt_in",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "CSV over MQTT",
+        "topic": "csv/lines",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 420,
         "wires": [
             [
-                "d86331a0c8f892df"
+                "csv_parser"
             ]
         ]
     },
     {
-        "id": "d86331a0c8f892df",
+        "id": "csv_parser",
+        "type": "csv",
+        "z": "f6f2187d.f17ca8",
+        "name": "Parse CSV",
+        "sep": ",",
+        "hdrin": false,
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,CANID,CANDATA",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 380,
+        "y": 420,
+        "wires": [
+            [
+                "decoder_fn"
+            ]
+        ]
+    },
+    {
+        "id": "decoder_fn",
         "type": "function",
-        "z": "c1f4eaa4b1b8e2b0",
-        "name": "Extract Cylinder Pressure",
-        "func": "// Only process if CAN ID matches\nif (msg.payload.id !== \"101\") {\n    return null;\n}\n\n// Parameters\nconst position = 4; // byte index (0-based)\nconst length = 10; // bits length\nconst resolution = 0.02; // scaling factor\nconst offset = 0; // offset value\n\n// Convert hex string to byte array\nlet bytes = [];\nfor (let i = 0; i < msg.payload.data.length; i += 2) {\n    bytes.push(parseInt(msg.payload.data.substr(i, 2), 16));\n}\n\n// Extract two bytes starting from 'position'\nlet rawValue = (bytes[position] << 8) | bytes[position + 1];\n\n// If length < 16, mask the unused bits\nif (length < 16) {\n    const mask = (1 << length) - 1;\n    rawValue = rawValue & mask;\n}\n\n// Apply resolution and offset\nconst value = rawValue * resolution + offset;\n\nmsg.payload = {\n    label: \"Cylinder Pressure\",\n    value: value,\n    unit: \"MPa\"\n};\n\nreturn msg;",
+        "z": "f6f2187d.f17ca8",
+        "name": "Decode CAN Data",
+        "func": "// Extract fields\nlet ts = parseFloat(msg.payload.timestamp);\nlet id = String(msg.payload.CANID).toLowerCase(); // normalize to string\nlet data = String(msg.payload.CANDATA);\n\nlet result = {};\n\n// Convert hex string to bytes\nlet bytes = [];\nfor (let i = 0; i < data.length; i += 2) {\n    bytes.push(parseInt(data.substr(i, 2), 16));\n}\n\nif (id === \"101\") {\n    // Cylinder Pressure\n    let raw = ((bytes[3] << 2) | (bytes[4] >> 6)) & 0x3FF;\n    let value = raw * 0.02 + 0;\n\n    result = {\n        CANID: id,\n        Label: \"CylinderPressure\",\n        Value: value,\n        Unit: \"Mpa\",\n        Timestamp: ts\n    };\n}\nelse if (id === \"d7\") {\n    // Vehicle Speed\n    let raw = (bytes[2] << 8) | bytes[3];\n    let value = raw * 0.01 + 0;\n\n    result = {\n        CANID: id,\n        Label: \"VehicleSpeed\",\n        Value: value,\n        Unit: \"km/h\",\n        Timestamp: ts\n    };\n}\n\nmsg.payload = result;\nreturn msg;\n",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 160,
+        "x": 620,
+        "y": 420,
         "wires": [
             [
-                "872b674b79df764b"
+                "debug_out"
             ]
         ]
     },
     {
-        "id": "872b674b79df764b",
+        "id": "debug_out",
         "type": "debug",
-        "z": "c1f4eaa4b1b8e2b0",
-        "name": "Debug Output",
+        "z": "f6f2187d.f17ca8",
+        "name": "Decoded Output",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -55,8 +92,32 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 730,
-        "y": 160,
+        "x": 880,
+        "y": 420,
         "wires": []
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "Mosquitto",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {}
     }
 ]
