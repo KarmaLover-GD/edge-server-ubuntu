@@ -1012,3 +1012,27 @@
 1756332346: New connection from 172.18.0.1:46416 on port 1883.
 1756332346: New client connected from 172.18.0.1:46416 as auto-BB54AF2C-0CFF-7E7C-D6BC-DF5013EC75AD (p2, c1, k60).
 1756332346: Client auto-BB54AF2C-0CFF-7E7C-D6BC-DF5013EC75AD disconnected.
+1756332856: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1756332856: Error saving in-memory database, unable to open /mosquitto/data//mosquitto.db.new for writing.
+1756332856: Error: Permission denied.
+1756333252: New connection from 172.18.0.1:34448 on port 1883.
+1756333252: New client connected from 172.18.0.1:34448 as auto-69ECE72C-3209-5CFA-2506-ADFC37540044 (p2, c1, k60).
+1756333252: Client auto-69ECE72C-3209-5CFA-2506-ADFC37540044 disconnected.
+1756333254: New connection from 172.18.0.1:38584 on port 1883.
+1756333254: New client connected from 172.18.0.1:38584 as auto-D1913992-3E99-5E6E-35EE-D2353C4DA472 (p2, c1, k60).
+1756333254: Client auto-D1913992-3E99-5E6E-35EE-D2353C4DA472 disconnected.
+1756333281: New connection from 172.18.0.1:43752 on port 1883.
+1756333281: New client connected from 172.18.0.1:43752 as auto-659E7477-EF92-9458-F8C6-489FB85E6F35 (p2, c1, k60).
+1756333281: Client auto-659E7477-EF92-9458-F8C6-489FB85E6F35 disconnected.
+1756333375: New connection from 172.18.0.1:50576 on port 1883.
+1756333375: New client connected from 172.18.0.1:50576 as auto-E5BC7761-DC30-D633-C018-4336A9C1FC33 (p2, c1, k60).
+1756333375: Client auto-E5BC7761-DC30-D633-C018-4336A9C1FC33 disconnected.
+1756333378: New connection from 172.18.0.1:50580 on port 1883.
+1756333378: New client connected from 172.18.0.1:50580 as auto-84E713CF-097F-B8BA-BAC4-09E814047B3F (p2, c1, k60).
+1756333378: Client auto-84E713CF-097F-B8BA-BAC4-09E814047B3F disconnected.
+1756333383: New connection from 172.18.0.1:50592 on port 1883.
+1756333383: New client connected from 172.18.0.1:50592 as auto-444274D5-4DCD-BB70-29A8-3FCD54834D3F (p2, c1, k60).
+1756333383: Client auto-444274D5-4DCD-BB70-29A8-3FCD54834D3F disconnected.
+1756333618: New connection from 172.18.0.1:46154 on port 1883.
+1756333618: New client connected from 172.18.0.1:46154 as auto-35EFA434-1745-ED58-DE57-9A468319E912 (p2, c1, k60).
+1756333618: Client auto-35EFA434-1745-ED58-DE57-9A468319E912 disconnected.
