@@ -937,3 +937,78 @@
 1756330714: New connection from 172.18.0.1:53230 on port 1883.
 1756330714: New client connected from 172.18.0.1:53230 as auto-0AA8C885-81ED-4FB3-24E3-2F59B1583619 (p2, c1, k60).
 1756330714: Client auto-0AA8C885-81ED-4FB3-24E3-2F59B1583619 disconnected.
+1756331055: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1756331055: Error saving in-memory database, unable to open /mosquitto/data//mosquitto.db.new for writing.
+1756331055: Error: Permission denied.
+1756331090: New connection from 172.18.0.1:49880 on port 1883.
+1756331090: New client connected from 172.18.0.1:49880 as auto-4645E2C6-6DCE-B8B1-9B68-C9C5B403C372 (p2, c1, k60).
+1756331090: Client auto-4645E2C6-6DCE-B8B1-9B68-C9C5B403C372 disconnected.
+1756331231: Client nodered7844d35038774d67 disconnected.
+1756331231: New connection from 172.18.0.6:38500 on port 1883.
+1756331231: New client connected from 172.18.0.6:38500 as nodered4e8ab120210ec5f6 (p2, c1, k60).
+1756331249: New connection from 172.18.0.1:38964 on port 1883.
+1756331249: New client connected from 172.18.0.1:38964 as auto-899750D3-A3CF-5B69-55B3-AC6E4C39FE67 (p2, c1, k60).
+1756331249: Client auto-899750D3-A3CF-5B69-55B3-AC6E4C39FE67 disconnected.
+1756331437: New connection from 172.18.0.1:53254 on port 1883.
+1756331437: New client connected from 172.18.0.1:53254 as auto-EC9F63D7-4252-F878-D5D6-4EA723CAE6A2 (p2, c1, k60).
+1756331437: Client auto-EC9F63D7-4252-F878-D5D6-4EA723CAE6A2 disconnected.
+1756331520: Client nodered4e8ab120210ec5f6 disconnected.
+1756331520: New connection from 172.18.0.6:55800 on port 1883.
+1756331520: New client connected from 172.18.0.6:55800 as nodered1f7d961ed1fae2da (p2, c1, k60).
+1756331523: New connection from 172.18.0.1:42750 on port 1883.
+1756331523: New client connected from 172.18.0.1:42750 as auto-6ED8C71A-A07F-BF34-E4AA-D1F628E58781 (p2, c1, k60).
+1756331523: Client auto-6ED8C71A-A07F-BF34-E4AA-D1F628E58781 disconnected.
+1756331573: Client nodered1f7d961ed1fae2da disconnected.
+1756331573: New connection from 172.18.0.6:35768 on port 1883.
+1756331573: New client connected from 172.18.0.6:35768 as nodereda1a24ce808b047af (p2, c1, k60).
+1756331580: New connection from 172.18.0.1:55458 on port 1883.
+1756331580: New client connected from 172.18.0.1:55458 as auto-370A9C6D-10B6-3878-64E2-F6B0927F9378 (p2, c1, k60).
+1756331580: Client auto-370A9C6D-10B6-3878-64E2-F6B0927F9378 disconnected.
+1756331612: Client nodereda1a24ce808b047af disconnected.
+1756331612: New connection from 172.18.0.6:52110 on port 1883.
+1756331612: New client connected from 172.18.0.6:52110 as nodered3d3b3c68085b4c91 (p2, c1, k60).
+1756331615: New connection from 172.18.0.1:38774 on port 1883.
+1756331615: New client connected from 172.18.0.1:38774 as auto-A21B6027-D2DC-778F-9757-B4FC6EB64EF1 (p2, c1, k60).
+1756331615: Client auto-A21B6027-D2DC-778F-9757-B4FC6EB64EF1 disconnected.
+1756331620: New connection from 172.18.0.1:38782 on port 1883.
+1756331620: New client connected from 172.18.0.1:38782 as auto-A604011F-2205-9E53-7F63-6583D6FA228B (p2, c1, k60).
+1756331620: Client auto-A604011F-2205-9E53-7F63-6583D6FA228B disconnected.
+1756331698: Client nodered3d3b3c68085b4c91 disconnected.
+1756331698: New connection from 172.18.0.6:39608 on port 1883.
+1756331698: New client connected from 172.18.0.6:39608 as nodered6c3e87e02a82eeb3 (p2, c1, k60).
+1756331701: New connection from 172.18.0.1:53644 on port 1883.
+1756331701: New client connected from 172.18.0.1:53644 as auto-605D2DAE-1494-C268-C860-7A41D8914B94 (p2, c1, k60).
+1756331701: Client auto-605D2DAE-1494-C268-C860-7A41D8914B94 disconnected.
+1756331706: New connection from 172.18.0.1:35210 on port 1883.
+1756331706: New client connected from 172.18.0.1:35210 as auto-E6C0D4DE-DD98-0D09-7B42-4EE4D1C0EBB1 (p2, c1, k60).
+1756331706: Client auto-E6C0D4DE-DD98-0D09-7B42-4EE4D1C0EBB1 disconnected.
+1756332010: Client nodered6c3e87e02a82eeb3 disconnected.
+1756332010: New connection from 172.18.0.6:53962 on port 1883.
+1756332010: New client connected from 172.18.0.6:53962 as noderedf25c9da39d918b98 (p2, c1, k60).
+1756332015: New connection from 172.18.0.1:53760 on port 1883.
+1756332015: New client connected from 172.18.0.1:53760 as auto-BACAD48E-7016-0373-1B3D-0E0DF5382376 (p2, c1, k60).
+1756332015: Client auto-BACAD48E-7016-0373-1B3D-0E0DF5382376 disconnected.
+1756332058: Client noderedf25c9da39d918b98 disconnected.
+1756332058: New connection from 172.18.0.6:33596 on port 1883.
+1756332058: New client connected from 172.18.0.6:33596 as nodereda396496cd0209204 (p2, c1, k60).
+1756332061: New connection from 172.18.0.1:52938 on port 1883.
+1756332061: New client connected from 172.18.0.1:52938 as auto-3246D314-8728-BB5C-A075-4C15E509B29D (p2, c1, k60).
+1756332061: Client auto-3246D314-8728-BB5C-A075-4C15E509B29D disconnected.
+1756332067: New connection from 172.18.0.1:43808 on port 1883.
+1756332067: New client connected from 172.18.0.1:43808 as auto-F4D4EBE6-F2FA-D4AE-7A69-232F6337BA8D (p2, c1, k60).
+1756332067: Client auto-F4D4EBE6-F2FA-D4AE-7A69-232F6337BA8D disconnected.
+1756332128: Client nodereda396496cd0209204 disconnected.
+1756332128: New connection from 172.18.0.6:54344 on port 1883.
+1756332128: New client connected from 172.18.0.6:54344 as nodered11bc3390e7696b5d (p2, c1, k60).
+1756332137: New connection from 172.18.0.1:58042 on port 1883.
+1756332137: New client connected from 172.18.0.1:58042 as auto-729671FC-9B56-2E2E-3A57-6ECD9957C0D7 (p2, c1, k60).
+1756332137: Client auto-729671FC-9B56-2E2E-3A57-6ECD9957C0D7 disconnected.
+1756332332: Client nodered11bc3390e7696b5d disconnected.
+1756332332: New connection from 172.18.0.6:54332 on port 1883.
+1756332332: New client connected from 172.18.0.6:54332 as nodered2c86d0719064788e (p2, c1, k60).
+1756332337: New connection from 172.18.0.1:47346 on port 1883.
+1756332337: New client connected from 172.18.0.1:47346 as auto-14B633E2-1048-A1E3-7D94-316A2C88BBD1 (p2, c1, k60).
+1756332337: Client auto-14B633E2-1048-A1E3-7D94-316A2C88BBD1 disconnected.
+1756332346: New connection from 172.18.0.1:46416 on port 1883.
+1756332346: New client connected from 172.18.0.1:46416 as auto-BB54AF2C-0CFF-7E7C-D6BC-DF5013EC75AD (p2, c1, k60).
+1756332346: Client auto-BB54AF2C-0CFF-7E7C-D6BC-DF5013EC75AD disconnected.

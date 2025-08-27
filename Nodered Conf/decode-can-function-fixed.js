@@ -1,210 +1,157 @@
-// Complete Fixed Decode CAN Data Function for Node-RED
-// This function handles both CSV string data and object data formats
-// and properly formats data for InfluxDB storage
+// Fixed Decode CAN Data Function for Node-RED
+// Handles both CSV strings and parsed object arrays
+// Validates rows and formats data safely for InfluxDB
 
 let rows = msg.payload;
 let decoded = [];
 let influxData = [];
 
-// Debug the input
+// Debug input
 node.log('Input type: ' + typeof rows);
 node.log('Input length: ' + (Array.isArray(rows) ? rows.length : 'not array'));
-node.log('First row: ' + JSON.stringify(rows[0]));
+if (Array.isArray(rows) && rows.length > 0) {
+    node.log('First row: ' + JSON.stringify(rows[0]));
+}
 
-// Handle CSV data - it comes as individual strings, not objects
+// --- Case 1: Payload is raw CSV string ---
 if (typeof rows === 'string') {
-    // Split the CSV string into lines and parse each line
     let lines = rows.split('\n').filter(line => line.trim() !== '');
-    
+
     lines.forEach((line, index) => {
-        // Skip header line
         if (line.includes('timestamp') || line.includes('CANID') || line.includes('CANDATA')) {
             node.log('Skipping header line: ' + line);
             return;
         }
-        
-        // Parse CSV line manually
+
         let parts = line.split(',');
-        if (parts.length >= 3) {
-            let ts = parseFloat(parts[0]);
-            let id = String(parts[1] || '').toLowerCase();
-            let data = String(parts[2] || '');
-            
-            node.log('Processing row ' + index + ': ts=' + ts + ', id=' + id + ', data=' + data);
-            
-            // Validate timestamp and data
-            if (isNaN(ts) || !data || data.length < 8) {
-                node.log('Skipping row ' + index + ' - invalid data: ts=' + ts + ', data=' + data);
-                return;
-            }
+        if (parts.length < 3) return;
 
-            let bytes = [];
-            for (let i = 0; i < data.length; i += 2) {
-                let byte = parseInt(data.substr(i, 2), 16);
-                if (!isNaN(byte)) {
-                    bytes.push(byte);
-                }
-            }
-            
-            // Ensure we have enough bytes
-            if (bytes.length < 5) {
-                node.log('Skipping row ' + index + ' - insufficient bytes: ' + bytes.length);
-                return;
-            }
+        let ts = parseFloat(parts[0]);
+        let id = String(parts[1] || '').toLowerCase();
+        let data = String(parts[2] || '');
 
-            if (id === "101") {
-                let raw = ((bytes[3] << 2) | (bytes[4] >> 6)) & 0x3FF;
-                let value = raw * 0.02;
-                
-                // For CSV output
-                decoded.push({Timestamp: ts, CANID: id, Label: "CylinderPressure", Value: value, Unit: "Mpa"});
-                
-                // For InfluxDB - use the proper format with measurement, tags, and fields
-                influxData.push({
-                    measurement: "can_data",
-                    tags: {
-                        can_id: id,
-                        label: "CylinderPressure",
-                        unit: "Mpa"
-                    },
-                    fields: {
-                        value: value,
-                        raw_value: raw
-                    },
-                    timestamp: ts * 1000000000
-                });
-                
-                node.log('Processed CylinderPressure: value=' + value + ', raw=' + raw);
-            }
-            else if (id === "d7") {
-                let raw = (bytes[2] << 8) | bytes[3];
-                let value = raw * 0.01;
-                
-                // For CSV output
-                decoded.push({Timestamp: ts, CANID: id, Label: "VehicleSpeed", Value: value, Unit: "km/h"});
-                
-                // For InfluxDB - use the proper format with measurement, tags, and fields
-                influxData.push({
-                    measurement: "can_data",
-                    tags: {
-                        can_id: id,
-                        label: "VehicleSpeed",
-                        unit: "km/h"
-                    },
-                    fields: {
-                        value: value,
-                        raw_value: raw
-                    },
-                    timestamp: ts * 1000000000
-                });
-                
-                node.log('Processed VehicleSpeed: value=' + value + ', raw=' + raw);
-            }
+        if (isNaN(ts) || !id || !data || data.length < 8) {
+            node.log('Skipping invalid CSV row ' + index + ': ' + line);
+            return;
         }
-    });
-} else {
-    // Handle array format if it comes as objects
-    if (!Array.isArray(rows)) {
-        rows = [rows];
-    }
-    
-    rows.forEach((row, index) => {
-        if (typeof row === 'object' && row !== null) {
-            let ts = parseFloat(row.timestamp);
-            let id = String(row.CANID || '').toLowerCase();
-            let data = String(row.CANDATA || '');
-            
-            node.log('Processing object row ' + index + ': ts=' + ts + ', id=' + id + ', data=' + data);
-            
-            // Validate timestamp and data
-            if (isNaN(ts) || !data || data.length < 8) {
-                node.log('Skipping object row ' + index + ' - invalid data: ts=' + ts + ', data=' + data);
-                return;
-            }
 
-            let bytes = [];
-            for (let i = 0; i < data.length; i += 2) {
-                let byte = parseInt(data.substr(i, 2), 16);
-                if (!isNaN(byte)) {
-                    bytes.push(byte);
-                }
-            }
-            
-            // Ensure we have enough bytes
-            if (bytes.length < 5) {
-                node.log('Skipping object row ' + index + ' - insufficient bytes: ' + bytes.length);
-                return;
-            }
+        let bytes = [];
+        for (let i = 0; i < data.length; i += 2) {
+            let byte = parseInt(data.substr(i, 2), 16);
+            if (!isNaN(byte)) bytes.push(byte);
+        }
+        if (bytes.length < 5) {
+            node.log('Skipping row ' + index + ' - insufficient bytes');
+            return;
+        }
 
-            if (id === "101") {
-                let raw = ((bytes[3] << 2) | (bytes[4] >> 6)) & 0x3FF;
-                let value = raw * 0.02;
-                
-                // For CSV output
-                decoded.push({Timestamp: ts, CANID: id, Label: "CylinderPressure", Value: value, Unit: "Mpa"});
-                
-                // For InfluxDB - use the proper format with measurement, tags, and fields
-                influxData.push({
-                    measurement: "can_data",
-                    tags: {
-                        can_id: id,
-                        label: "CylinderPressure",
-                        unit: "Mpa"
-                    },
-                    fields: {
-                        value: value,
-                        raw_value: raw
-                    },
-                    timestamp: ts * 1000000000
-                });
-                
-                node.log('Processed object CylinderPressure: value=' + value + ', raw=' + raw);
-            }
-            else if (id === "d7") {
-                let raw = (bytes[2] << 8) | bytes[3];
-                let value = raw * 0.01;
-                
-                // For CSV output
-                decoded.push({Timestamp: ts, CANID: id, Label: "VehicleSpeed", Value: value, Unit: "km/h"});
-                
-                // For InfluxDB - use the proper format with measurement, tags, and fields
-                influxData.push({
-                    measurement: "can_data",
-                    tags: {
-                        can_id: id,
-                        label: "VehicleSpeed",
-                        unit: "km/h"
-                    },
-                    fields: {
-                        value: value,
-                        raw_value: raw
-                    },
-                    timestamp: ts * 1000000000
-                });
-                
-                node.log('Processed object VehicleSpeed: value=' + value + ', raw=' + raw);
-            }
-        } else {
-            node.log('Skipping invalid object row ' + index + ': ' + JSON.stringify(row));
+        if (id === "101") {
+            let raw = ((bytes[3] << 2) | (bytes[4] >> 6)) & 0x3FF;
+            let value = raw * 0.02;
+            decoded.push({ Timestamp: ts, CANID: id, Label: "CylinderPressure", Value: value, Unit: "Mpa" });
+
+            // For InfluxDB - SIMPLIFIED format that the node can handle
+            influxData.push({
+                timestamp: ts * 1000000000,  // Use 'timestamp' field
+                can_id: id,
+                label: "CylinderPressure",
+                unit: "Mpa",
+                value: value,
+                raw_value: raw
+            });
+        } else if (id === "d7") {
+            let raw = (bytes[2] << 8) | bytes[3];
+            let value = raw * 0.01;
+            decoded.push({ Timestamp: ts, CANID: id, Label: "VehicleSpeed", Value: value, Unit: "km/h" });
+
+            // For InfluxDB - SIMPLIFIED format that the node can handle
+            influxData.push({
+                timestamp: ts * 1000000000,  // Use 'timestamp' field
+                can_id: id,
+                label: "VehicleSpeed",
+                unit: "km/h",
+                value: value,
+                raw_value: raw
+            });
         }
     });
 }
 
-// Create separate messages for different outputs
+// --- Case 2: Payload is array of objects (CSV node output) ---
+else {
+    if (!Array.isArray(rows)) rows = [rows];
+
+    rows.forEach((row, index) => {
+        if (typeof row !== 'object' || row === null) {
+            node.log('Skipping non-object row ' + index + ': ' + JSON.stringify(row));
+            return;
+        }
+
+        if (!row.timestamp || !row.CANID || !row.CANDATA) {
+            node.log('Skipping empty row ' + index + ': ' + JSON.stringify(row));
+            return;
+        }
+
+        let ts = parseFloat(row.timestamp);
+        let id = String(row.CANID || '').toLowerCase();
+        let data = String(row.CANDATA || '');
+
+        if (isNaN(ts) || !id || !data || data.length < 8) {
+            node.log('Skipping invalid object row ' + index + ': ' + JSON.stringify(row));
+            return;
+        }
+
+        let bytes = [];
+        for (let i = 0; i < data.length; i += 2) {
+            let byte = parseInt(data.substr(i, 2), 16);
+            if (!isNaN(byte)) bytes.push(byte);
+        }
+        if (bytes.length < 5) {
+            node.log('Skipping object row ' + index + ' - insufficient bytes');
+            return;
+        }
+
+        if (id === "101") {
+            let raw = ((bytes[3] << 2) | (bytes[4] >> 6)) & 0x3FF;
+            let value = raw * 0.02;
+            decoded.push({ Timestamp: ts, CANID: id, Label: "CylinderPressure", Value: value, Unit: "Mpa" });
+
+            // For InfluxDB - SIMPLIFIED format that the node can handle
+            influxData.push({
+                timestamp: ts * 1000000000,  // Use 'timestamp' field
+                can_id: id,
+                label: "CylinderPressure",
+                unit: "Mpa",
+                value: value,
+                raw_value: raw
+            });
+        } else if (id === "d7") {
+            let raw = (bytes[2] << 8) | bytes[3];
+            let value = raw * 0.01;
+            decoded.push({ Timestamp: ts, CANID: id, Label: "VehicleSpeed", Value: value, Unit: "km/h" });
+
+            // For InfluxDB - SIMPLIFIED format that the node can handle
+            influxData.push({
+                timestamp: ts * 1000000000,  // Use 'timestamp' field
+                can_id: id,
+                label: "VehicleSpeed",
+                unit: "km/h",
+                value: value,
+                raw_value: raw
+            });
+        }
+    });
+}
+
+// Outputs
 msg.payload = decoded;
 msg.topic = "csv_output";
 
-// Create InfluxDB message
-let influxMsg = {
-    payload: influxData,
-    topic: "influxdb_data"
-};
-
-// Debug output
+// Debug summary
 node.log('Decoded records: ' + decoded.length);
 node.log('InfluxDB records: ' + influxData.length);
 if (influxData.length > 0) {
     node.log('InfluxDB data sample: ' + JSON.stringify(influxData[0]));
 }
 
-return [msg, influxMsg];
+return [msg, { payload: influxData }];
