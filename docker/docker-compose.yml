@@ -20,6 +20,7 @@ services:
     depends_on:
       - mqtt
       - influxdb
+    user: "1000:1000"  # Run as non-root user to match host permissions
 
   influxdb:
     image: influxdb:1.8
@@ -43,6 +44,8 @@ services:
       - "3000:3000"
     volumes:
       - grafana_data:/var/lib/grafana
+      - ../grafana/provisioning:/etc/grafana/provisioning
+      - ../grafana/dashboards:/var/lib/grafana/dashboards
     depends_on:
       - influxdb
     environment:

@@ -34,15 +34,36 @@
         "z": "23d96169be429688",
         "name": "Parse CSV",
         "sep": ",",
-        "hdrin": false,
+        "hdrin": true,
         "multi": "mult",
         "ret": "\\n",
         "temp": "timestamp,CANID,CANDATA",
-        "skip": "0",
+        "skip": "1",
         "strings": true,
         "include_empty_strings": "",
         "include_null_values": "",
         "x": 350,
+        "y": 420,
+        "wires": [
+            [
+                "debug_csv_parsed"
+            ]
+        ]
+    },
+    {
+        "id": "debug_csv_parsed",
+        "type": "debug",
+        "z": "23d96169be429688",
+        "name": "Debug: CSV Parsed",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
         "y": 420,
         "wires": [
             [
@@ -55,8 +76,8 @@
         "type": "function",
         "z": "23d96169be429688",
         "name": "Decode CAN Data",
-        "func": "let rows = msg.payload;\nlet decoded = [];\n\nrows.forEach(row => {\n    let ts = parseFloat(row.timestamp);\n    let id = String(row.CANID).toLowerCase();\n    let data = String(row.CANDATA);\n\n    let bytes = [];\n    for (let i = 0; i < data.length; i += 2) {\n        bytes.push(parseInt(data.substr(i, 2), 16));\n    }\n\n    if (id === \"101\") {\n        let raw = ((bytes[3] << 2) | (bytes[4] >> 6)) & 0x3FF;\n        let value = raw * 0.02;\n        decoded.push({Timestamp: ts, CANID: id, Label: \"CylinderPressure\", Value: value, Unit: \"Mpa\"});\n    }\n    else if (id === \"d7\") {\n        let raw = (bytes[2] << 8) | bytes[3];\n        let value = raw * 0.01;\n        decoded.push({Timestamp: ts, CANID: id, Label: \"VehicleSpeed\", Value: value, Unit: \"km/h\"});\n    }\n});\n\nmsg.payload = decoded;\nreturn msg;",
-        "outputs": 1,
+        "func": "let rows = msg.payload;\nlet decoded = [];\nlet influxData = [];\n\n// Debug the input\nnode.log('Input type: ' + typeof rows);\nnode.log('Input length: ' + (Array.isArray(rows) ? rows.length : 'not array'));\nnode.log('First row: ' + JSON.stringify(rows[0]));\n\n// Ensure rows is an array\nif (!Array.isArray(rows)) {\n    rows = [rows];\n}\n\nrows.forEach((row, index) => {\n    // Handle both object and array formats\n    let ts, id, data;\n    \n    if (typeof row === 'object' && row !== null) {\n        ts = parseFloat(row.timestamp || row.Timestamp || row[0]);\n        id = String(row.CANID || row[1] || '').toLowerCase();\n        data = String(row.CANDATA || row[2] || '');\n    } else {\n        node.log('Skipping invalid row ' + index + ': ' + JSON.stringify(row));\n        return; // Skip invalid rows\n    }\n    \n    // Validate timestamp and data\n    if (isNaN(ts) || !data || data.length < 8) {\n        node.log('Skipping row ' + index + ' - invalid data: ts=' + ts + ', data=' + data);\n        return; // Skip invalid data\n    }\n\n    let bytes = [];\n    for (let i = 0; i < data.length; i += 2) {\n        let byte = parseInt(data.substr(i, 2), 16);\n        if (!isNaN(byte)) {\n            bytes.push(byte);\n        }\n    }\n    \n    // Ensure we have enough bytes\n    if (bytes.length < 5) {\n        node.log('Skipping row ' + index + ' - insufficient bytes: ' + bytes.length);\n        return;\n    }\n\n    if (id === \"101\") {\n        let raw = ((bytes[3] << 2) | (bytes[4] >> 6)) & 0x3FF;\n        let value = raw * 0.02;\n        \n        // For CSV output\n        decoded.push({Timestamp: ts, CANID: id, Label: \"CylinderPressure\", Value: value, Unit: \"Mpa\"});\n        \n        // For InfluxDB - use the format expected by the influxdb node\n        influxData.push({\n            measurement: \"can_data\",\n            tags: {\n                can_id: id,\n                label: \"CylinderPressure\",\n                unit: \"Mpa\"\n            },\n            fields: {\n                value: value,\n                raw_value: raw\n            },\n            timestamp: ts * 1000000000\n        });\n        \n        node.log('Processed CylinderPressure: value=' + value + ', raw=' + raw);\n    }\n    else if (id === \"d7\") {\n        let raw = (bytes[2] << 8) | bytes[3];\n        let value = raw * 0.01;\n        \n        // For CSV output\n        decoded.push({Timestamp: ts, CANID: id, Label: \"VehicleSpeed\", Value: value, Unit: \"km/h\"});\n        \n        // For InfluxDB - use the format expected by the influxdb node\n        influxData.push({\n            measurement: \"can_data\",\n            tags: {\n                can_id: id,\n                label: \"VehicleSpeed\",\n                unit: \"km/h\"\n            },\n            fields: {\n                value: value,\n                raw_value: raw\n            },\n            timestamp: ts * 1000000000\n        });\n        \n        node.log('Processed VehicleSpeed: value=' + value + ', raw=' + raw);\n    }\n});\n\n// Create separate messages for different outputs\nmsg.payload = decoded;\nmsg.topic = \"csv_output\";\n\n// Create InfluxDB message - ensure payload is an array\nlet influxMsg = {\n    payload: influxData,\n    topic: \"influxdb_data\"\n};\n\n// Debug output\nnode.log('Decoded records: ' + decoded.length);\nnode.log('InfluxDB records: ' + influxData.length);\nnode.log('InfluxDB data sample: ' + JSON.stringify(influxData[0]));\n\nreturn [msg, influxMsg];",
+        "outputs": 2,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
@@ -67,6 +88,9 @@
         "wires": [
             [
                 "9a6e5c99c5bfcf40"
+            ],
+            [
+                "influxdb_output"
             ]
         ]
     },
@@ -76,7 +100,7 @@
         "z": "23d96169be429688",
         "name": "Convert to CSV",
         "sep": ",",
-        "hdrin": false,
+        "hdrin": true,
         "multi": "one",
         "ret": "\\n",
         "temp": "Timestamp,CANID,Label,Value,Unit",
@@ -97,12 +121,12 @@
         "type": "file",
         "z": "23d96169be429688",
         "name": "Write Decoded CSV",
-        "filename": "/tmp/decoded.csv\"",
+        "filename": "/csv/decoded.csv",
         "filenameType": "str",
         "appendNewline": true,
         "createDir": true,
-        "overwriteFile": "true",
-        "encoding": "none",
+        "overwriteFile": "false",
+        "encoding": "utf8",
         "x": 900,
         "y": 220,
         "wires": [
@@ -115,16 +139,56 @@
         "id": "3842cfdf2f832cb4",
         "type": "debug",
         "z": "23d96169be429688",
-        "name": "debug 1",
+        "name": "CSV File Status",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
         "x": 1020,
-        "y": 540,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "influxdb_output",
+        "type": "influxdb out",
+        "z": "23d96169be429688",
+        "name": "Store in InfluxDB",
+        "influxdb": "influxdb_config",
+        "measurement": "can_data",
+        "precision": "ns",
+        "retentionPolicy": "",
+        "database": "edge_data",
+        "precisionV18FluxV20": "ns",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 900,
+        "y": 420,
+        "wires": [
+            [
+                "influxdb_status"
+            ]
+        ]
+    },
+    {
+        "id": "influxdb_status",
+        "type": "debug",
+        "z": "23d96169be429688",
+        "name": "InfluxDB Status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 420,
         "wires": []
     },
     {
@@ -150,5 +214,21 @@
         "willQos": "0",
         "willPayload": "",
         "willMsg": {}
+    },
+    {
+        "id": "influxdb_config",
+        "type": "influxdb",
+        "hostname": "influxdb",
+        "port": "8086",
+        "protocol": "http",
+        "database": "edge_data",
+        "name": "InfluxDB",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "",
+        "rejectUnauthorized": false,
+        "username": "admin",
+        "password": "admin123"
     }
 ]
