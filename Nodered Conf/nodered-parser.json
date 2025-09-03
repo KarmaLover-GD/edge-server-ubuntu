@@ -1,11 +1,67 @@
 [
     {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": true,
+        "info": ""
+    },
+    {
         "id": "23d96169be429688",
         "type": "tab",
         "label": "Flow 2",
         "disabled": false,
         "info": "",
         "env": []
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "Mosquitto",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {}
+    },
+    {
+        "id": "influxdb_config",
+        "type": "influxdb",
+        "hostname": "influxdb",
+        "port": "8086",
+        "protocol": "http",
+        "database": "edge_data",
+        "name": "InfluxDB",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "",
+        "timeout": "",
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
     },
     {
         "id": "93bf057bd9bb516a",
@@ -21,11 +77,10 @@
         "rh": 0,
         "inputs": 0,
         "x": 160,
-        "y": 220,
+        "y": 160,
         "wires": [
             [
-                "476d9c4bb282ec73",
-                "e3eaf190b182e1ac"
+                "476d9c4bb282ec73"
             ]
         ]
     },
@@ -36,7 +91,7 @@
         "name": "Parse CSV",
         "sep": ",",
         "hdrin": false,
-        "multi": "mult",
+        "multi": "one",
         "ret": "\\n",
         "temp": "timestamp,CANID,CANDATA",
         "skip": "1",
@@ -47,7 +102,7 @@
         "y": 620,
         "wires": [
             [
-                "debug_csv_parsed"
+                "e3eaf190b182e1ac"
             ]
         ]
     },
@@ -80,8 +135,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 430,
-        "y": 160,
+        "x": 470,
+        "y": 140,
         "wires": [
             [
                 "9a6e5c99c5bfcf40"
@@ -202,46 +257,7 @@
         "wires": []
     },
     {
-        "id": "mqtt_broker",
-        "type": "mqtt-broker",
-        "name": "Mosquitto",
-        "broker": "mosquitto",
-        "port": "1883",
-        "clientid": "",
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {}
-    },
-    {
-        "id": "influxdb_config",
-        "type": "influxdb",
-        "hostname": "influxdb",
-        "port": "8086",
-        "protocol": "http",
-        "database": "edge_data",
-        "name": "InfluxDB",
-        "usetls": false,
-        "tls": "",
-        "influxdbVersion": "1.x",
-        "url": "",
-        "timeout": "",
-        "rejectUnauthorized": false
-    },
-    {
-        "id": "9c3134ebcc487dca",
+        "id": "3f554d5700bf4f41",
         "type": "global-config",
         "env": [],
         "modules": {

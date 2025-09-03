@@ -10,7 +10,7 @@ $(date +%s),101,0000000000000000
 $(date +%s),d7,0000000000000000"
 
 echo "📤 Sending test data via MQTT..."
-echo "$TEST_DATA" | mosquitto_pub -h 192.168.12.1 -t "csv/file" -l
+echo "$TEST_DATA" | mosquitto_pub -h localhost -t "csv/file" -l
 
 echo "✅ Test data sent!"
 echo ""
