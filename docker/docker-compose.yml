@@ -20,7 +20,7 @@ services:
     depends_on:
       - mqtt
       - influxdb
-    user: "1000:1000"  # Run as non-root user to match host permissions
+    user: "1000:1000"  
 
   influxdb:
     image: influxdb:1.8
